@@ -2,9 +2,9 @@
 pragma solidity ^0.8.17;
 
 contract Crowdfunding {
-    address owner;
-    uint256 deadline;
-    uint256 goal;
+    address public owner;
+    uint256 public deadline;
+    uint256 public goal;
     mapping(address => uint256) public pledgeOf;
 
     constructor(uint256 numberOfDays, uint256 _goal) {
