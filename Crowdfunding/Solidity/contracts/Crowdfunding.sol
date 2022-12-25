@@ -13,5 +13,27 @@ contract Crowdfunding {
         goal = _goal;
     }
 
-    // TODO: add tests
+    function pledge(uint256 amount) public payable {
+        require(block.timestamp < deadline);
+        require(msg.value == amount);
+
+        pledgeOf[msg.sender] += amount;
+    }
+
+    function claimFunds() public {
+        require(address(this).balance >= goal);
+        require(block.timestamp >= deadline);
+        require(msg.sender == owner);
+
+        payable(msg.sender).transfer(address(this).balance);
+    }
+
+    function getRefund() public {
+        require(address(this).balance < goal);
+        require(block.timestamp >= deadline);
+
+        uint256 amount = pledgeOf[msg.sender];
+        pledgeOf[msg.sender] = 0;
+        payable(msg.sender).transfer(amount);
+    }
 }
