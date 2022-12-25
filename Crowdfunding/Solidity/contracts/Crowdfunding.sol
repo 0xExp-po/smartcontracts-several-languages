@@ -7,9 +7,12 @@ contract Crowdfunding {
     uint256 public goal;
     mapping(address => uint256) public pledgeOf;
 
-    constructor(uint256 numberOfDays, uint256 _goal) {
+    constructor(uint256 _numberOfDays, uint256 _goal) {
+        require(_numberOfDays > 0, "numberOfDays must be greater than zero");
+        require(_goal > 0, "goal must be greater than zero");
+
         owner = msg.sender;
-        deadline = block.timestamp + (numberOfDays * 1 days);
+        deadline = block.timestamp + (_numberOfDays * 1 days);
         goal = _goal;
     }
 

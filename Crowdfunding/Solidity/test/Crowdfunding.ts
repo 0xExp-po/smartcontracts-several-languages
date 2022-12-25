@@ -7,61 +7,56 @@ describe("Crowdfunding", function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
-  async function deployOneYearLockFixture() {
-    // const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-    // const ONE_GWEI = 1_000_000_000;
-
-    // const lockedAmount = ONE_GWEI;
-    // const unlockTime = (await time.latest()) + ONE_YEAR_IN_SECS;
-
+  async function deployCrowdfunding() {
     const days = 10;
-    const goal = 10;
+    const goal = 100;
 
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
 
     const CrowdfundingContract = await ethers.getContractFactory("Crowdfunding");
     const crowdfund = await CrowdfundingContract.deploy(days, goal);
-    return { crowdfund, days, goal, owner, otherAccount };
+    const blockNumBefore = await ethers.provider.getBlockNumber();
+    const blockBefore = await ethers.provider.getBlock(blockNumBefore);
+    const deployTime = blockBefore.timestamp;
+
+    return { crowdfund, days, goal, deployTime, owner, otherAccount };
   }
 
   describe("Deployment", function () {
     it("Should set the right deadline", async function () {
-      const { crowdfund, days } = await loadFixture(deployOneYearLockFixture);
+      const { crowdfund, days, deployTime} = await loadFixture(deployCrowdfunding);
 
-      expect(await crowdfund.deadline()).to.equal(days);
+      expect(await crowdfund.deadline()).to.equal(deployTime + days * 24 * 60 * 60);
     });
 
     it("Should set the right goal", async function () {
-      const { crowdfund, goal } = await loadFixture(deployOneYearLockFixture);
+      const { crowdfund, goal } = await loadFixture(deployCrowdfunding);
 
       expect(await crowdfund.goal()).to.equal(goal);
     });
 
     it("Should set the right owner", async function () {
-      const { crowdfund, owner } = await loadFixture(deployOneYearLockFixture);
+      const { crowdfund, owner } = await loadFixture(deployCrowdfunding);
 
       expect(await crowdfund.owner()).to.equal(owner.address);
     });
 
-    // it("Should receive and store the funds to lock", async function () {
-    //   const { lock, lockedAmount } = await loadFixture(
-    //     deployOneYearLockFixture
-    //   );
+    it("Should fail if deadline is zero", async function () {
+      const CrowdfundingContract = await ethers.getContractFactory("Crowdfunding");
 
-    //   expect(await ethers.provider.getBalance(lock.address)).to.equal(
-    //     lockedAmount
-    //   );
-    // });
+      await expect(CrowdfundingContract.deploy(0, 100)).to.be.revertedWith(
+        "numberOfDays must be greater than zero"
+      );
+    });
 
-    // it("Should fail if the unlockTime is not in the future", async function () {
-    //   // We don't use the fixture here because we want a different deployment
-    //   const latestTime = await time.latest();
-    //   const Lock = await ethers.getContractFactory("Lock");
-    //   await expect(Lock.deploy(latestTime, { value: 1 })).to.be.revertedWith(
-    //     "Unlock time should be in the future"
-    //   );
-    // });
+    it("Should fail if goal is zero", async function () {
+      const CrowdfundingContract = await ethers.getContractFactory("Crowdfunding");
+
+      await expect(CrowdfundingContract.deploy(10, 0)).to.be.revertedWith(
+        "goal must be greater than zero"
+      );
+    });
   });
 
 //   describe("Withdrawals", function () {
