@@ -3,14 +3,10 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 describe("Crowdfunding", function () {
-  // We define a fixture to reuse the same setup in every test.
-  // We use loadFixture to run this setup once, snapshot that state,
-  // and reset Hardhat Network to that snapshot in every test.
   async function deployCrowdfunding() {
     const days = 1;
     const goal = 10;
 
-    // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
 
     const CrowdfundingContract = await ethers.getContractFactory(
@@ -103,7 +99,6 @@ describe("Crowdfunding", function () {
       );
       await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
 
-      // TODO: fix
       await expect(crowdfund.connect(owner).claimFunds()).to.be.reverted;
     });
 
@@ -120,7 +115,7 @@ describe("Crowdfunding", function () {
         deployCrowdfunding
       );
       await crowdfund.connect(otherAccount).pledge({
-        value: ethers.utils.parseEther("0"), // TODO why 0 works and 9 not?
+        value: ethers.utils.parseEther("0"), // Explain why 0 works and 0-9 not?
       });
       await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
       await crowdfund.connect(otherAccount).getRefund();
@@ -147,9 +142,7 @@ describe("Crowdfunding", function () {
         value: ethers.utils.parseEther("11"),
       });
       await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
-      await crowdfund.connect(otherAccount).getRefund();
 
-      // TODO: fix
       await expect(crowdfund.connect(otherAccount).getRefund()).to.be.reverted;
     });
   });
