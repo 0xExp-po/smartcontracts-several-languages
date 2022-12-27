@@ -1,5 +1,4 @@
 import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
@@ -8,13 +7,15 @@ describe("Crowdfunding", function () {
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
   async function deployCrowdfunding() {
-    const days = 10;
-    const goal = 100;
+    const days = 1;
+    const goal = 10;
 
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const CrowdfundingContract = await ethers.getContractFactory("Crowdfunding");
+    const CrowdfundingContract = await ethers.getContractFactory(
+      "Crowdfunding"
+    );
     const crowdfund = await CrowdfundingContract.deploy(days, goal);
     const blockNumBefore = await ethers.provider.getBlockNumber();
     const blockBefore = await ethers.provider.getBlock(blockNumBefore);
@@ -25,9 +26,13 @@ describe("Crowdfunding", function () {
 
   describe("Deployment", function () {
     it("Should set the right deadline", async function () {
-      const { crowdfund, days, deployTime} = await loadFixture(deployCrowdfunding);
+      const { crowdfund, days, deployTime } = await loadFixture(
+        deployCrowdfunding
+      );
 
-      expect(await crowdfund.deadline()).to.equal(deployTime + days * 24 * 60 * 60);
+      expect(await crowdfund.deadline()).to.equal(
+        deployTime + days * 24 * 60 * 60
+      );
     });
 
     it("Should set the right goal", async function () {
@@ -43,85 +48,109 @@ describe("Crowdfunding", function () {
     });
 
     it("Should fail if deadline is zero", async function () {
-      const CrowdfundingContract = await ethers.getContractFactory("Crowdfunding");
+      const CrowdfundingContract = await ethers.getContractFactory(
+        "Crowdfunding"
+      );
 
-      await expect(CrowdfundingContract.deploy(0, 100)).to.be.revertedWith(
+      await expect(CrowdfundingContract.deploy(0, 10)).to.be.rejectedWith(
         "numberOfDays must be greater than zero"
       );
     });
 
     it("Should fail if goal is zero", async function () {
-      const CrowdfundingContract = await ethers.getContractFactory("Crowdfunding");
+      const CrowdfundingContract = await ethers.getContractFactory(
+        "Crowdfunding"
+      );
 
-      await expect(CrowdfundingContract.deploy(10, 0)).to.be.revertedWith(
+      await expect(CrowdfundingContract.deploy(1, 0)).to.be.rejectedWith(
         "goal must be greater than zero"
       );
     });
   });
 
-//   describe("Withdrawals", function () {
-//     describe("Validations", function () {
-//       it("Should revert with the right error if called too soon", async function () {
-//         const { lock } = await loadFixture(deployOneYearLockFixture);
+  describe("Pledge", function () {
+    it("Should pledge to the campain", async function () {
+      const { crowdfund } = await loadFixture(deployCrowdfunding);
+      await crowdfund.pledge({
+        value: ethers.utils.parseEther("1.0"),
+      });
 
-//         await expect(lock.withdraw()).to.be.revertedWith(
-//           "You can't withdraw yet"
-//         );
-//       });
+      expect(await crowdfund.provider.getBalance(crowdfund.address)).to.equal(
+        ethers.utils.parseEther("1.0")
+      );
+    });
+  });
 
-//       it("Should revert with the right error if called from another account", async function () {
-//         const { lock, unlockTime, otherAccount } = await loadFixture(
-//           deployOneYearLockFixture
-//         );
+  describe("Claim the funds", function () {
+    it("Should claim the funds of the campain when founded properly", async function () {
+      const { crowdfund, owner, deployTime, days } = await loadFixture(
+        deployCrowdfunding
+      );
+      await crowdfund.pledge({
+        value: ethers.utils.parseEther("11"),
+      });
+      await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
+      await crowdfund.connect(owner).claimFunds();
 
-//         // We can increase the time in Hardhat Network
-//         await time.increaseTo(unlockTime);
+      expect(await crowdfund.provider.getBalance(owner.address)).to.equal(
+        ethers.utils.parseEther("9999.999066055850047491")
+      );
+    });
 
-//         // We use lock.connect() to send a transaction from another account
-//         await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith(
-//           "You aren't the owner"
-//         );
-//       });
+    it("Should fail on claim when goal was not reached", async function () {
+      const { crowdfund, owner, deployTime, days } = await loadFixture(
+        deployCrowdfunding
+      );
+      await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
 
-//       it("Shouldn't fail if the unlockTime has arrived and the owner calls it", async function () {
-//         const { lock, unlockTime } = await loadFixture(
-//           deployOneYearLockFixture
-//         );
+      // TODO: fix
+      await expect(crowdfund.connect(owner).claimFunds()).to.be.reverted;
+    });
 
-//         // Transactions are sent using the first signer by default
-//         await time.increaseTo(unlockTime);
+    it("Should fail on claim when campain is not over", async function () {
+      const { crowdfund, owner } = await loadFixture(deployCrowdfunding);
 
-//         await expect(lock.withdraw()).not.to.be.reverted;
-//       });
-//     });
+      await expect(crowdfund.connect(owner).claimFunds()).to.be.reverted;
+    });
+  });
 
-//     describe("Events", function () {
-//       it("Should emit an event on withdrawals", async function () {
-//         const { lock, unlockTime, lockedAmount } = await loadFixture(
-//           deployOneYearLockFixture
-//         );
+  describe("Get refund", function () {
+    it("Should get refund when goal was not reached in given time", async function () {
+      const { crowdfund, otherAccount, deployTime, days } = await loadFixture(
+        deployCrowdfunding
+      );
+      await crowdfund.connect(otherAccount).pledge({
+        value: ethers.utils.parseEther("0"), // TODO why 0 works and 9 not?
+      });
+      await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
+      await crowdfund.connect(otherAccount).getRefund();
 
-//         await time.increaseTo(unlockTime);
+      expect(
+        await crowdfund.provider.getBalance(otherAccount.address)
+      ).to.equal(ethers.utils.parseEther("9999.999909612847503976"));
+    });
 
-//         await expect(lock.withdraw())
-//           .to.emit(lock, "Withdrawal")
-//           .withArgs(lockedAmount, anyValue); // We accept any value as `when` arg
-//       });
-//     });
+    it("Should fail on refund when time has not passed", async function () {
+      const { crowdfund, otherAccount } = await loadFixture(deployCrowdfunding);
+      await crowdfund.connect(otherAccount).pledge({
+        value: ethers.utils.parseEther("11"),
+      });
 
-//     describe("Transfers", function () {
-//       it("Should transfer the funds to the owner", async function () {
-//         const { lock, unlockTime, lockedAmount, owner } = await loadFixture(
-//           deployOneYearLockFixture
-//         );
+      await expect(crowdfund.connect(otherAccount).getRefund()).to.be.reverted;
+    });
 
-//         await time.increaseTo(unlockTime);
+    it("Should fail on refund when goal was reached in given time", async function () {
+      const { crowdfund, otherAccount, deployTime, days } = await loadFixture(
+        deployCrowdfunding
+      );
+      await crowdfund.connect(otherAccount).pledge({
+        value: ethers.utils.parseEther("11"),
+      });
+      await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
+      await crowdfund.connect(otherAccount).getRefund();
 
-//         await expect(lock.withdraw()).to.changeEtherBalances(
-//           [owner, lock],
-//           [lockedAmount, -lockedAmount]
-//         );
-//       });
-//     });
-//   });
+      // TODO: fix
+      await expect(crowdfund.connect(otherAccount).getRefund()).to.be.reverted;
+    });
+  });
 });

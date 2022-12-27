@@ -16,11 +16,10 @@ contract Crowdfunding {
         goal = _goal;
     }
 
-    function pledge(uint256 amount) public payable {
+    function pledge() public payable {
         require(block.timestamp < deadline);
-        require(msg.value == amount);
 
-        pledgeOf[msg.sender] += amount;
+        pledgeOf[msg.sender] += msg.value;
     }
 
     function claimFunds() public {
