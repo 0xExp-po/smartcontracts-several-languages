@@ -22,13 +22,21 @@ describe("Starknet", function () {
         );
 
         console.log("Started deployment");
-        const contract: StarknetContract = await contractFactory.deploy({ initial_number_of_days: 10, initial_goal: 100 });
+        const days: number = 10;
+        const block = await starknet.getBlock();
+        const deployTime = block.timestamp;
+        const now: number = deployTime + days * 24 * 60 * 60;
+        const contract: StarknetContract = await contractFactory.deploy({ initial_number_of_days: days, initial_goal: 100 });
         console.log(`Deployed contract to ${contract.address} in tx ${contract.deployTxHash}`);
 
-        const { res: number_of_days } = await contract.call("get_number_of_days");
-        expect(number_of_days).to.deep.equal(10n);
+
+        const { res: deadline } = await contract.call("get_deadline");
+        expect(deadline.toString()).to.deep.equal(now.toString());
         
         const { res: goal } = await contract.call("get_goal");
         expect(goal).to.deep.equal(100n);
+
+        const { res: owner } = await contract.call("get_owner");
+        expect(owner).to.deep.equal(0n);
     });
 });
