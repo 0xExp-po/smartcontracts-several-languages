@@ -1,13 +1,8 @@
 // Declare this file as a StarkNet contract and set the required
 // builtins.
 %lang starknet
-%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.common.syscalls import get_tx_signature
-from starkware.cairo.common.math import unsigned_div_rem
-from starkware.cairo.common.alloc import alloc
-from util import almost_equal as aeq
 
 // Define a storage variable.
 @storage_var
