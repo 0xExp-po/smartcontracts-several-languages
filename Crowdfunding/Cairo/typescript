@@ -1,0 +1,268 @@
+Script started on 2022-10-13 14:08:42+02:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="114" LINES="30"]
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ls
+[0m[01;32mREADME.md[0m  [34;42mcontracts[0m          [34;42mnode_modules[0m       [34;42mscripts[0m             [34;42mtoken-contract-artifacts[0m
+[34;42martifacts[0m  [01;32mdeploy-invoke.sh[0m   [01;32mpackage-lock.json[0m  [34;42mstarknet-artifacts[0m  [01;32mtsconfig.json[0m
+[34;42mcache[0m      [01;32mhardhat.config.ts[0m  [01;32mpackage.json[0m       [34;42mtest[0m                [01;32mtypescript[0m
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ cd scripts/
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ ls
+[0m[01;32mcompile-contract.ts[0m  [01;32mdeploy-argent.ts[0m  [01;32mlibrary-call.ts[0m  [01;32mtransfer-funds.ts[0m
+[01;32mdelegate-proxy.ts[0m    [01;32mdeploy.ts[0m         [01;32mquick-script.ts[0m
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ com
+combase.dll               command                   compopt                   comrepl.dll
+comcat.dll                command_not_found_handle  compose                   comres.dll
+comctl32.dll              comp.exe                  compstui.dll              comsetup.log
+comdlg32.dll              compact.exe               computecore.dll           comsnap.dll
+comexp.msc                compgen                   computelibeventlog.dll    comsvcs.dll
+coml2.dll                 complete                  computenetwork.dll        comuid.dll
+comm                      compmgmt.msc              computestorage.dll        
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ com
+combase.dll               command                   compopt                   comrepl.dll
+comcat.dll                command_not_found_handle  compose                   comres.dll
+comctl32.dll              comp.exe                  compstui.dll              comsetup.log
+comdlg32.dll              compact.exe               computecore.dll           comsnap.dll
+comexp.msc                compgen                   computelibeventlog.dll    comsvcs.dll
+coml2.dll                 complete                  computenetwork.dll        comuid.dll
+comm                      compmgmt.msc              computestorage.dll        
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ com
+combase.dll               command                   compopt                   comrepl.dll
+comcat.dll                command_not_found_handle  compose                   comres.dll
+comctl32.dll              comp.exe                  compstui.dll              comsetup.log
+comdlg32.dll              compact.exe               computecore.dll           comsnap.dll
+comexp.msc                compgen                   computelibeventlog.dll    comsvcs.dll
+coml2.dll                 complete                  computenetwork.dll        comuid.dll
+comm                      compmgmt.msc              computestorage.dll        
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ com
+combase.dll               command                   compopt                   comrepl.dll
+comcat.dll                command_not_found_handle  compose                   comres.dll
+comctl32.dll              comp.exe                  compstui.dll              comsetup.log
+comdlg32.dll              compact.exe               computecore.dll           comsnap.dll
+comexp.msc                compgen                   computelibeventlog.dll    comsvcs.dll
+coml2.dll                 complete                  computenetwork.dll        comuid.dll
+comm                      compmgmt.msc              computestorage.dll        
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ com
+combase.dll               command                   compopt                   comrepl.dll
+comcat.dll                command_not_found_handle  compose                   comres.dll
+comctl32.dll              comp.exe                  compstui.dll              comsetup.log
+comdlg32.dll              compact.exe               computecore.dll           comsnap.dll
+comexp.msc                compgen                   computelibeventlog.dll    comsvcs.dll
+coml2.dll                 complete                  computenetwork.dll        comuid.dll
+comm                      compmgmt.msc              computestorage.dll        
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ com
+combase.dll               command                   compopt                   comrepl.dll
+comcat.dll                command_not_found_handle  compose                   comres.dll
+comctl32.dll              comp.exe                  compstui.dll              comsetup.log
+comdlg32.dll              compact.exe               computecore.dll           comsnap.dll
+comexp.msc                compgen                   computelibeventlog.dll    comsvcs.dll
+coml2.dll                 complete                  computenetwork.dll        comuid.dll
+comm                      compmgmt.msc              computestorage.dll        
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ com[K[K[Kls
+[0m[01;32mcompile-contract.ts[0m  [01;32mdeploy-argent.ts[0m  [01;32mlibrary-call.ts[0m  [01;32mtransfer-funds.ts[0m
+[01;32mdelegate-proxy.ts[0m    [01;32mdeploy.ts[0m         [01;32mquick-script.ts[0m
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ ./compile-contract.ts 
+./compile-contract.ts: line 1: import: command not found
+./compile-contract.ts: line 3: syntax error near unexpected token `('
+./compile-contract.ts: line 3: `async function main() {'
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ ./compile-contract.ts ls[Kcd scripts/ls[Kpoetry run starknet-devnet --lite-mode[A]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ source /home/mikiw/.cache/pypoetry/virtualenvs/starknet-devnet-Xwx3J2b3-py3.8/bin/activate[A]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ cd /mnt/c/Workspace/ShardLabs/starknet-devnet/[K[A]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ nvm[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cwget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash[A]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ nvm[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C use 14curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash[A]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ [17Pnode --version
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1Pversionpx hardhat test test/postman.test.ts 
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Using network integrated-devnet at http://127.0.0.1:5050
+[31mAn unexpected error occurred:[39m
+
+Error: Cannot find module '/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts/test/postman.test.ts'
+Require stack:
+- /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/mocha/lib/mocha.js
+- /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/mocha/index.js
+- /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/builtin-tasks/test.js
+- /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/internal/core/tasks/builtin-tasks.js
+- /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/internal/core/config/config-loading.js
+- /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/internal/cli/cli.js
+[90m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:985:15)[39m
+    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue [as _resolveFilename] (/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/[4m@cspotcode[24m/source-map-support/source-map-support.js:679:30)
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:833:27)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1057:19)[39m
+[90m    at require (node:internal/modules/cjs/helpers:103:18)[39m
+    at /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/[4mmocha[24m/lib/mocha.js:427:36
+    at Array.forEach (<anonymous>)
+    at Mocha.loadFiles (/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/[4mmocha[24m/lib/mocha.js:424:14)
+    at Mocha.run (/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/[4mmocha[24m/lib/mocha.js:1025:10)
+    at testFailures (/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/[4mhardhat[24m/src/builtin-tasks/test.ts:99:15) {
+  code: [32m'MODULE_NOT_FOUND'[39m,
+  requireStack: [
+    [32m'/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/mocha/lib/mocha.js'[39m,
+    [32m'/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/mocha/index.js'[39m,
+    [32m'/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/builtin-tasks/test.js'[39m,
+    [32m'/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/internal/core/tasks/builtin-tasks.js'[39m,
+    [32m'/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/internal/core/config/config-loading.js'[39m,
+    [32m'/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/node_modules/hardhat/internal/cli/cli.js'[39m
+  ]
+}
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ cd ..
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ cd ..npx hardhat test test/postman.test.ts 
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Using network integrated-devnet at http://127.0.0.1:5050
+
+[0m[0m
+[0m  Postman[0m
+  [31m  1) "before all" hook for "should deploy the messaging contract"[0m
+
+
+[92m [0m[32m 0 passing[0m[90m (6s)[0m
+[31m  1 failing[0m
+
+[0m  1) Postman
+       "before all" hook for "should deploy the messaging contract":
+[0m[31m     StarknetPluginError: Could not deploy contract: Got ClientConnectorError while trying to access http://host.docker.internal:5050/gateway/add_transaction.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/connector.py", line 1154, in _create_direct_connection
+    hosts = await asyncio.shield(host_resolved)
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/connector.py", line 880, in _resolve_host
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/resolver.py", line 33, in resolve
+    infos = await self._loop.getaddrinfo(
+  File "/usr/local/lib/python3.9/asyncio/base_events.py", line 861, in getaddrinfo
+    return await self.run_in_executor(
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/local/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name does not resolve
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/services/external_api/client.py", line 112, in _send_request
+    async with session.request(
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/client.py", line 1138, in __aenter__
+    self._resp = await self._coro
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/client.py", line 535, in _request
+    conn = await self._connector.connect(
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/connector.py", line 542, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/connector.py", line 907, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/connector.py", line 1166, in _create_direct_connection
+    raise ClientConnectorError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host host.docker.internal:5050 ssl:default [Name does not resolve]
+Error: ClientConnectorError: Cannot connect to host host.docker.internal:5050 ssl:default [Name does not resolve]
+[0m[90m
+      at StarknetContractFactory.<anonymous> (node_modules/@shardlabs/starknet-hardhat-plugin/src/types.ts:450:19)
+      at Generator.next (<anonymous>)
+      at fulfilled (node_modules/@shardlabs/starknet-hardhat-plugin/dist/src/types.js:28:58)
+      at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[0m
+
+
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/postman.test.ts [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcd scripts/
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ .[K./sc[K[K
+compile-contract.ts  deploy-argent.ts     library-call.ts      transfer-funds.ts    
+delegate-proxy.ts    deploy.ts            quick-script.ts      
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ ./compile-contract.ts 
+./compile-contract.ts: line 1: import: command not found
+./compile-contract.ts: line 3: syntax error near unexpected token `('
+./compile-contract.ts: line 3: `async function main() {'
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ npx hardhat starknet-compile contracts/contract.cairo^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ cd..
+cdcd..: command not found
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example/scripts[00m$ cd.[K ..
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ls
+[0m[01;32mREADME.md[0m  [34;42mcontracts[0m          [34;42mnode_modules[0m       [34;42mscripts[0m             [34;42mtoken-contract-artifacts[0m
+[34;42martifacts[0m  [01;32mdeploy-invoke.sh[0m   [01;32mpackage-lock.json[0m  [34;42mstarknet-artifacts[0m  [01;32mtsconfig.json[0m
+[34;42mcache[0m      [01;32mhardhat.config.ts[0m  [01;32mpackage.json[0m       [34;42mtest[0m                [01;32mtypescript[0m
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat starknet-compile contracts/contract.cairo
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Compiling /mnt/c/Workspace/ShardLabs/starknet-hardhat-example/contracts/contract.cairo
+	Succeeded
+
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/quick-test.ts
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Using network integrated-devnet at http://127.0.0.1:5050
+
+[0m[0m
+[0m  Starknet[0m
+  [31m  1) should work for a fresh deployment[0m
+
+
+[92m [0m[32m 0 passing[0m[90m (53ms)[0m
+[31m  1 failing[0m
+
+[0m  1) Starknet
+       should work for a fresh deployment:
+[0m[31m     Error: Env var OZ_ACCOUNT_ADDRESS not set or empty[0m[90m
+      at ensureEnvVar (test/util.ts:16:15)
+      at Context.<anonymous> (test/quick-test.ts:11:44)
+[0m
+
+
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/quick-test.ts
+^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/quick-test.ts
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Using network integrated-devnet at http://127.0.0.1:5050
+
+[0m[0m
+[0m  Starknet[0m
+  [31m  1) should work for a fresh deployment[0m
+
+
+[92m [0m[32m 0 passing[0m[90m (33ms)[0m
+[31m  1 failing[0m
+
+[0m  1) Starknet
+       should work for a fresh deployment:
+[0m[31m     Error: Env var OZ_ACCOUNT_PRIVATE_KEY not set or empty[0m[90m
+      at ensureEnvVar (test/util.ts:16:15)
+      at Context.<anonymous> (test/quick-test.ts:12:47)
+[0m
+
+
+^C^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/quick-test.ts
+^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ ^C
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/quick-test.ts
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Using network integrated-devnet at http://127.0.0.1:5050
+
+[0m[0m
+[0m  Starknet[0m
+  [31m  1) should work for a fresh deployment[0m
+
+
+[92m [0m[32m 0 passing[0m[90m (3s)[0m
+[31m  1 failing[0m
+
+[0m  1) Starknet
+       should work for a fresh deployment:
+[0m[31m     StarknetPluginError: Could not perform call on getPublicKey.
+Error: AssertionError: address must start with '0x'. Got: '1'.
+
+Make sure to `invoke` and `estimateFee` through account, and `call` directly through contract.[0m[90m
+      at StarknetContract.<anonymous> (node_modules/@shardlabs/starknet-hardhat-plugin/src/types.ts:602:19)
+      at Generator.next (<anonymous>)
+      at fulfilled (node_modules/@shardlabs/starknet-hardhat-plugin/dist/src/types.js:28:58)
+      at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[0m
+
+
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/quick-test.ts
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Using network integrated-devnet at http://127.0.0.1:5050
+[31mError in plugin Starknet: Cannot spawn integrated-devnet-8970126262529774: http://127.0.0.1:5050 already occupied.[39m
+
+For more info run Hardhat with --show-stack-traces
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ npx hardhat test test/quick-test.ts
+Starknet plugin using dockerized environment (shardlabs/cairo-cli:0.10.0)
+Using network integrated-devnet at http://127.0.0.1:5050
+[31mError in plugin Starknet: Cannot spawn integrated-devnet-3548944326410197: http://127.0.0.1:5050 already occupied.[39m
+
+For more info run Hardhat with --show-stack-traces
+]0;mikiw@DESKTOP-MNMK6PF: /mnt/c/Workspace/ShardLabs/starknet-hardhat-example[01;32mmikiw@DESKTOP-MNMK6PF[00m:[01;34m/mnt/c/Workspace/ShardLabs/starknet-hardhat-example[00m$ exit
+
+Script done on 2022-10-13 14:56:32+02:00 [COMMAND_EXIT_CODE="0"]
