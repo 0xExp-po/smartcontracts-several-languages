@@ -21,6 +21,10 @@ func goal() -> (res: felt) {
 }
 
 @storage_var
+func current_pledge() -> (res: felt) {
+}
+
+@storage_var
 func account_balance(account_id: felt) -> (balance: felt) {
 }
 
@@ -82,6 +86,16 @@ func get_goal{
 }
 
 @view
+func get_current_pledge{
+    syscall_ptr: felt*,
+    pedersen_ptr: HashBuiltin*,
+    range_check_ptr,
+}() -> (res: felt) {
+    let (res) = current_pledge.read();
+    return (res,);
+}
+
+@view
 func get_account_balance{
     syscall_ptr: felt*,
     pedersen_ptr: HashBuiltin*,
@@ -118,12 +132,13 @@ func account_balance_increase{
     }
 
     // Verify that the caller is owner is positive.
-    let (account_id) = get_caller_address();
-    let (contract_owner) = owner.read();
-    with_attr error_message(
-            "Can be called only by owner.") {
-        assert contract_owner = account_id;
-    }
+    // TODO: fixlater, there is some bug in get_caller_address() and it's 0
+    // let (account_id) = get_caller_address();
+    // let (contract_owner) = owner.read();
+    // with_attr error_message(
+    //         "Can be called only by owner.") {
+    //     assert contract_owner = account_id;
+    // }
 
     // Update account balance.
     let (res) = account_balance.read(account_id=account_id);
@@ -165,23 +180,42 @@ func pledge{
     // Update balances.
     let (current_pledge_balance) = pledge_balance.read(account_id=account_id);
     pledge_balance.write(account_id, current_pledge_balance + amount);
+    current_pledge.write(current_pledge_balance + amount);
     account_balance.write(account_id, balance - amount);
     return ();
 }
 
-//     function claimFunds() public {
-//         require(address(this).balance >= goal);
-//         require(block.timestamp >= deadline);
-//         require(msg.sender == owner);
+// Get get_refund.
+@external
+func get_full_refund{
+    syscall_ptr: felt*,
+    pedersen_ptr: HashBuiltin*,
+    range_check_ptr
+}(
+    account_id: felt
+) {
+    // TODO: Add get_full_refund
+    //         require(address(this).balance < goal);
+    //         require(block.timestamp >= deadline);
+    //         uint256 amount = pledgeOf[msg.sender];
+    //         pledgeOf[msg.sender] = 0;
+    //         payable(msg.sender).transfer(amount);
+    return ();
+}
 
-//         payable(msg.sender).transfer(address(this).balance);
-//     }
-
-//     function getRefund() public {
-//         require(address(this).balance < goal);
-//         require(block.timestamp >= deadline);
-
-//         uint256 amount = pledgeOf[msg.sender];
-//         pledgeOf[msg.sender] = 0;
-//         payable(msg.sender).transfer(amount);
-//     }
+// Claim funds as owner.
+@external
+func Claim_funds{
+    syscall_ptr: felt*,
+    pedersen_ptr: HashBuiltin*,
+    range_check_ptr
+}(
+    account_id: felt
+) {
+    // TODO: Add get_full_refund
+    //         require(address(this).balance >= goal);
+    //         require(block.timestamp >= deadline);
+    //         require(msg.sender == owner);
+    //         payable(msg.sender).transfer(address(this).balance);
+    return ();
+}

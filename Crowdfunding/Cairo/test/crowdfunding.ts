@@ -7,30 +7,40 @@ import { ensureEnvVar } from "./util";
 describe("Starknet", function () {
     this.timeout(TIMEOUT);
 
-    it("should work for a fresh deployment", async function () {
+    let contractFactory: StarknetContractFactory;
+    let contract: StarknetContract;
+    let account: any;
+    let now: number;
+    let goal: number;
+    let days: number;
+
+    before(async function () {
         const accountAddress = ensureEnvVar("OZ_ACCOUNT_ADDRESS");
         const accountPrivateKey = ensureEnvVar("OZ_ACCOUNT_PRIVATE_KEY");
-        const account = await starknet.getAccountFromAddress(
+        account = await starknet.getAccountFromAddress(
             accountAddress,
             accountPrivateKey,
             "OpenZeppelin"
         );
         console.log(`Account address: ${account.address}, public key: ${account.publicKey})`);
-
-        const contractFactory: StarknetContractFactory = await starknet.getContractFactory(
+        contractFactory = await starknet.getContractFactory(
             "crowdfunding"
         );
-
+        
         console.log("Started deployment");
-        const days: number = 10;
+        goal = 100;
+        days = 10;
         const block = await starknet.getBlock();
         const deployTime = block.timestamp;
-        const now: number = deployTime + days * 24 * 60 * 60;
-        const contract: StarknetContract = await contractFactory.deploy({ initial_number_of_days: days, initial_goal: 100 });
+        now = deployTime + days * 24 * 60 * 60;
+        contract = await contractFactory.deploy({ initial_number_of_days: days, initial_goal: goal });
         console.log(`Deployed contract to ${contract.address} in tx ${contract.deployTxHash}`);
 
+        await account.invoke(contract, "account_balance_increase", { amount: 1000, account_id: account.address });
+    });
 
-        const { res: deadline } = await contract.call("get_deadline");
+    it("should work for a fresh deployment", async function () {
+        const { res: deadline } = await contract.call("get_deadline");        
         expect(deadline.toString()).to.deep.equal(now.toString());
         
         const { res: goal } = await contract.call("get_goal");
@@ -38,5 +48,21 @@ describe("Starknet", function () {
 
         const { res: owner } = await contract.call("get_owner");
         expect(owner).to.deep.equal(0n);
+
+        const { res: account_balance } = await contract.call("get_account_balance", {account_id: account.address});
+        expect(account_balance).to.deep.equal(1000n);
+
+        const { res: current_pledge } = await contract.call("get_current_pledge");
+        expect(current_pledge).to.deep.equal(0n)
+    });
+
+    it("should work for a campaign pledge", async function () {
+        await account.invoke(contract, "pledge", { amount: 101 });
+        
+        const { res: current_pledge } = await contract.call("get_current_pledge");
+        expect(current_pledge).to.deep.equal(101n);
+
+        const { res: account_balance } = await contract.call("get_account_balance", {account_id: account.address});
+        expect(account_balance).to.deep.equal(1000n-101n);
     });
 });
