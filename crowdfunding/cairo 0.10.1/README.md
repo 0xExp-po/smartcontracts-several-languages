@@ -1,8 +1,6 @@
-# Basic Sample Hardhat Project - with Starknet Plugin
+# Crowdfunding
 
-This project demonstrates a basic Hardhat project, but with [Starknet plugin](https://github.com/Shard-Labs/starknet-hardhat-plugin).
-
-## Get started
+This project is based on [Starknet Hardhat plugin](https://github.com/Shard-Labs/starknet-hardhat-example).
 
 Some scripts require environment variables (search for usage of `ensureEnvVar` in the repo). You can define these variables in an `.env` file in the project root.
 
