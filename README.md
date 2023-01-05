@@ -5,4 +5,6 @@ This repo is a collection of smart contracts that I wrote for learning purposes:
 - Crowdfunding contract written in Cairo, more [here](https://github.com/mikiw/SmartContracts/tree/main/crowdfunding/cairo%200.10.1)
 
 TODO:
+- Add Solana/Polkadot smart contract
+- Add Cosmos SDK smart contract
 - Fix problem with `await starknet.devnet.setTime(deployTime + (days + 1) * 24 * 60 * 60);`
