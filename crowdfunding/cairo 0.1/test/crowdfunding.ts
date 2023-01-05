@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { starknet } from "hardhat";
+// import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { StarknetContract, StarknetContractFactory } from "hardhat/types/runtime";
 import { TIMEOUT } from "./constants";
 import { ensureEnvVar } from "./util";
@@ -33,7 +34,7 @@ describe("Starknet", function () {
         const block = await starknet.getBlock();
         const deployTime = block.timestamp;
         now = deployTime + days * 24 * 60 * 60;
-        contract = await contractFactory.deploy({ initial_number_of_days: days, initial_goal: goal });
+        contract = await contractFactory.deploy({ initial_number_of_days: days, initial_goal: goal, initial_account_id: account.address });
         console.log(`Deployed contract to ${contract.address} in tx ${contract.deployTxHash}`);
 
         await account.invoke(contract, "account_balance_increase", { amount: 1000, account_id: account.address });
@@ -47,13 +48,34 @@ describe("Starknet", function () {
         expect(goal).to.deep.equal(100n);
 
         const { res: owner } = await contract.call("get_owner");
-        expect(owner).to.deep.equal(0n);
+        expect(owner).to.deep.equal(910652462498721021811173708055395672475122979568577554221771407653781759920n);
 
         const { res: account_balance } = await contract.call("get_account_balance", {account_id: account.address});
         expect(account_balance).to.deep.equal(1000n);
 
         const { res: current_pledge } = await contract.call("get_current_pledge");
         expect(current_pledge).to.deep.equal(0n)
+    });
+
+    it("should work for a campaign refund", async function () {
+        await account.invoke(contract, "pledge", { amount: 1 });
+
+        const { res: current_pledge } = await contract.call("get_current_pledge");
+        expect(current_pledge).to.deep.equal(1n);
+
+        const { res: account_balance } = await contract.call("get_account_balance", {account_id: account.address});
+        expect(account_balance).to.deep.equal(1000n-1n);
+
+        // TODO: speed up time
+        // there is some problem with hardhat-network-helpers in HH plugin
+        // const block = await starknet.getBlock();
+        // const deployTime = block.timestamp;
+        // await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
+
+        await account.invoke(contract, "get_full_refund");
+
+        const { res: account_balance_after_refund } = await contract.call("get_account_balance", {account_id: account.address});
+        expect(account_balance_after_refund).to.deep.equal(1000n);
     });
 
     it("should work for a campaign pledge", async function () {
@@ -64,5 +86,18 @@ describe("Starknet", function () {
 
         const { res: account_balance } = await contract.call("get_account_balance", {account_id: account.address});
         expect(account_balance).to.deep.equal(1000n-101n);
+    });
+
+    it("should work for a campaign claim funds", async function () {
+        const { res: account_balance } = await contract.call("get_account_balance", {account_id: account.address});
+        expect(account_balance).to.deep.equal(899n);
+
+        await account.invoke(contract, "claim_funds");
+
+        const { res: get_end_of_campaign_after_claim_funds } = await contract.call("get_end_of_campaign");
+        expect(get_end_of_campaign_after_claim_funds).to.deep.equal(1n);
+
+        const { res: account_balance_after_claim_funds } = await contract.call("get_account_balance", {account_id: account.address});
+        expect(account_balance_after_claim_funds).to.deep.equal(1000n);
     });
 });

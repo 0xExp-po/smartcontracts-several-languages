@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.7",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@shardlabs/starknet-hardhat-plugin": "0.6.8",
     "@types/chai": "^4.2.22",

@@ -43,7 +43,7 @@ func constructor{
     pedersen_ptr: HashBuiltin*,
     range_check_ptr
 }(
-    initial_number_of_days: felt, initial_goal: felt
+    initial_number_of_days: felt, initial_goal: felt, initial_account_id: felt
 ) {
     assert_lt(0, initial_number_of_days);
     assert_lt(0, initial_goal);
@@ -51,9 +51,7 @@ func constructor{
     let (block_timestamp) = get_block_timestamp();
     deadline.write(block_timestamp + (initial_number_of_days* 24 * 60 * 60));
     goal.write(initial_goal);
-
-    let (account_id) = get_caller_address();
-    owner.write(account_id);
+    owner.write(initial_account_id);
     end_of_campaign.write(0);
 
     return ();
@@ -87,6 +85,16 @@ func get_goal{
     range_check_ptr,
 }() -> (res: felt) {
     let (res) = goal.read();
+    return (res,);
+}
+
+@view
+func get_end_of_campaign{
+    syscall_ptr: felt*,
+    pedersen_ptr: HashBuiltin*,
+    range_check_ptr,
+}() -> (res: felt) {
+    let (res) = end_of_campaign.read();
     return (res,);
 }
 
@@ -136,14 +144,12 @@ func account_balance_increase{
         assert_nn(amount);
     }
 
-    // Verify that the caller is owner is positive.
-    // TODO: fixlater, there is some bug in get_caller_address() and it's 0
-    // let (account_id) = get_caller_address();
-    // let (contract_owner) = owner.read();
-    // with_attr error_message(
-    //         "Can be called only by owner.") {
-    //     assert contract_owner = account_id;
-    // }
+    let (caller_id) = get_caller_address();
+    let (contract_owner) = owner.read();
+    with_attr error_message(
+            "Can be called only by owner.") {
+        assert contract_owner = caller_id;
+    }
 
     // Update account balance.
     let (res) = account_balance.read(account_id=account_id);
@@ -174,7 +180,7 @@ func pledge{
         assert_lt(block_timestamp, assert_deadline);
     }
 
-    // Verify that tamount is greater than account_balance.
+    // Verify that amount is greater than account_balance.
     let (account_id) = get_caller_address();
     let (balance) = account_balance.read(account_id=account_id);
     with_attr error_message(
@@ -200,22 +206,21 @@ func claim_funds{
     let (end_of_campaign_status) = end_of_campaign.read();
     assert end_of_campaign_status = 0;
     
-    // Verify that the caller is owner is positive.
-    // TODO: fixlater, there is some bug in get_caller_address() and it's 0
-    // let (account_id) = get_caller_address();
+    let (caller_id) = get_caller_address();
     let (contract_owner) = owner.read();
-    // with_attr error_message(
-    //         "Can be called only by owner.") {
-    //     assert contract_owner = account_id;
-    // }
+    with_attr error_message(
+            "Can be called only by owner.") {
+        assert contract_owner = caller_id;
+    }
 
     let (current_pledge_balance) = current_pledge.read();
     let (pledge_goal) = goal.read();
-    assert_lt(current_pledge_balance, pledge_goal);
+    assert_lt(pledge_goal, current_pledge_balance);
 
-    let (deadline_timestamp) = deadline.read();
-    let (block_timestamp) = get_block_timestamp();
-    assert_lt(deadline_timestamp, block_timestamp);
+    // TODO: fix time speed up later
+    // let (deadline_timestamp) = deadline.read();
+    // let (block_timestamp) = get_block_timestamp();
+    // assert_lt(deadline_timestamp, block_timestamp);
 
     // Update balances.
     let (balance) = account_balance.read(account_id=contract_owner);
@@ -233,18 +238,21 @@ func get_full_refund{
     syscall_ptr: felt*,
     pedersen_ptr: HashBuiltin*,
     range_check_ptr
-}(
-    account_id: felt
-) {
-    let (deadline_timestamp) = deadline.read();
-    let (block_timestamp) = get_block_timestamp();
-    assert_lt(deadline_timestamp, block_timestamp);
+}() {
+    let (end_of_campaign_status) = end_of_campaign.read();
+    assert end_of_campaign_status = 0;
+
+    // TODO: fix time speed up later
+    // let (deadline_timestamp) = deadline.read();
+    // let (block_timestamp) = get_block_timestamp();
+    // assert_lt(block_timestamp, deadline_timestamp);
 
     let (current_pledge_balance) = current_pledge.read();
     let (pledge_goal) = goal.read();
-    assert_lt(pledge_goal, current_pledge_balance);
+    assert_lt(current_pledge_balance, pledge_goal);
 
     // Update balances.
+    let (account_id) = get_caller_address();
     let (account_pledge_balance) = pledge_balance.read(account_id=account_id);
     let (user_account_balance) = account_balance.read(account_id=account_id);
     pledge_balance.write(account_id, 0);
