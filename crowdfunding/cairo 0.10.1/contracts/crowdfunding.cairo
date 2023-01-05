@@ -217,7 +217,7 @@ func claim_funds{
     let (pledge_goal) = goal.read();
     assert_lt(pledge_goal, current_pledge_balance);
 
-    // TODO: fix time speed up later
+    // TODO: fix time issue on devnet level
     // let (deadline_timestamp) = deadline.read();
     // let (block_timestamp) = get_block_timestamp();
     // assert_lt(deadline_timestamp, block_timestamp);
@@ -242,10 +242,10 @@ func get_full_refund{
     let (end_of_campaign_status) = end_of_campaign.read();
     assert end_of_campaign_status = 0;
 
-    // TODO: fix time speed up later
+    // TODO: fix time issue on devnet level
     // let (deadline_timestamp) = deadline.read();
     // let (block_timestamp) = get_block_timestamp();
-    // assert_lt(block_timestamp, deadline_timestamp);
+    // assert_lt(deadline_timestamp, block_timestamp);
 
     let (current_pledge_balance) = current_pledge.read();
     let (pledge_goal) = goal.read();

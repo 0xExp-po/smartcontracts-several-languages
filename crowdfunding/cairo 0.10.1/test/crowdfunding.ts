@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { starknet } from "hardhat";
-// import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { StarknetContract, StarknetContractFactory } from "hardhat/types/runtime";
 import { TIMEOUT } from "./constants";
 import { ensureEnvVar } from "./util";
@@ -66,11 +65,10 @@ describe("Starknet", function () {
         const { res: account_balance } = await contract.call("get_account_balance", {account_id: account.address});
         expect(account_balance).to.deep.equal(1000n-1n);
 
-        // TODO: speed up time
-        // there is some problem with hardhat-network-helpers in HH plugin
+        // TODO: fix time issue on devnet level
         // const block = await starknet.getBlock();
         // const deployTime = block.timestamp;
-        // await time.increaseTo(deployTime + (days + 1) * 24 * 60 * 60);
+        // await starknet.devnet.setTime(deployTime + (days + 1) * 24 * 60 * 60);
 
         await account.invoke(contract, "get_full_refund");
 
