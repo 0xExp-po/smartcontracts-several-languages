@@ -8,7 +8,7 @@ describe("zkproofstorageapp", () => {
   const program = anchor.workspace.Zkproofstorageapp;
   it("It initializes the account", async () => {
     const baseAccount = anchor.web3.Keypair.generate();
-    await program.rpc.initialize("Hello World", {
+    await program.rpc.initialize("0x0", {
       accounts: {
         baseAccount: baseAccount.publicKey,
         user: provider.wallet.publicKey,
@@ -18,8 +18,8 @@ describe("zkproofstorageapp", () => {
     });
 
     const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-    console.log('Data: ', account.data);
-    assert.ok(account.data === "Hello World");
+    console.log('Account:', account)
+    assert.ok(account.factRegistry[0] === "0x0");
     _baseAccount = baseAccount;
 
   });
@@ -27,17 +27,16 @@ describe("zkproofstorageapp", () => {
   it("Updates a previously created account", async () => {
     const baseAccount = _baseAccount;
 
-    await program.rpc.update("Some new data", {
+    await program.rpc.update("0x1", {
       accounts: {
         baseAccount: baseAccount.publicKey,
       },
     });
 
     const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-    console.log('Updated data: ', account.data)
-    assert.ok(account.data === "Some new data");
-    console.log('all account data:', account)
-    console.log('All data: ', account.dataList);
-    assert.ok(account.dataList.length === 2);
+    console.log('Account:', account)
+    assert.ok(account.factRegistry.length === 2);
+    assert.ok(account.factRegistry[0] === "0x0");
+    assert.ok(account.factRegistry[1] === "0x1");
   });
 });

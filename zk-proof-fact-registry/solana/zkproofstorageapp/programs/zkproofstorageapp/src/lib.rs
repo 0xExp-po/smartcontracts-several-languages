@@ -7,19 +7,15 @@ declare_id!("5wGcaLzZp1jztmJXeJecJ1Cr5A6miKruqqcaX5UcVekH");
 pub mod zkproofstorageapp {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>, data: String) -> ProgramResult {
+    pub fn initialize(ctx: Context<Initialize>, fact: String) -> ProgramResult {
         let base_account = &mut ctx.accounts.base_account;
-        let copy = data.clone();
-        base_account.data = data;
-        base_account.data_list.push(copy);
+        base_account.fact_registry.push(fact);
         Ok(())
     }
 
-    pub fn update(ctx: Context<Update>, data: String) -> ProgramResult {
+    pub fn update(ctx: Context<Update>, fact: String) -> ProgramResult {
         let base_account = &mut ctx.accounts.base_account;
-        let copy = data.clone();
-        base_account.data = data;
-        base_account.data_list.push(copy);
+        base_account.fact_registry.push(fact);
         Ok(())
     }
 }
@@ -41,6 +37,5 @@ pub struct Update<'info> {
 
 #[account]
 pub struct BaseAccount {
-    pub data: String,
-    pub data_list: Vec<String>,
+    pub fact_registry: Vec<String>,
 }
