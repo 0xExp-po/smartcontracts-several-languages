@@ -8,5 +8,5 @@ This repo is a collection of smart contracts that I wrote for learning purposes:
 TODO:
 - Add Polkadot smart contract
 - Add Cosmos SDK smart contract
-- Add Cardano smart contract written in Plutus
+- Add Cardano smart contract
 - Fix problem with `await starknet.devnet.setTime(deployTime + (days + 1) * 24 * 60 * 60);`
